@@ -1,5 +1,6 @@
 bin/cgi.app.gen.pl
 Build.PL
+Changelog.ini
 CHANGES
 lib/CGI/Application/Bouquet/Rose.pm
 lib/CGI/Application/Bouquet/Rose/.htcgi.bouquet.conf
