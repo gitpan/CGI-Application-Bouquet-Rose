@@ -39,7 +39,7 @@ our @EXPORT = qw(
 
 );
 
-our $VERSION = '1.01';
+our $VERSION = '1.05';
 
 # -----------------------------------------------
 
@@ -330,13 +330,13 @@ must restrict usage of the generated code to trusted persons.
 	shell> scripts/run.cgi.app.gen.pl > scripts/run.cgi.pl
 
 	Step 4: This is the log from run.cgi.app.gen.pl:
-	docroot:         /home/ron/httpd/prefork/htdocs
+	docroot:         /var/www
 	exclude:         ^(?:information_schema|pg_|sql_)
 	module:          Local::Wine
 	output_dir:      ./lib
 	prefix:          Local::Wine::CGI
 	remove:          0
-	tmpl_path:       ../CGI-Application-Bouquet-Rose-1.00/templates
+	tmpl_path:       ../CGI-Application-Bouquet-Rose/templates
 	verbose:         1
 	Working dir:     lib/Local/Wine/CGI
 	Rose::DB module: Local::Wine::Base::DB
@@ -346,7 +346,7 @@ must restrict usage of the generated code to trusted persons.
 	Table: wine. Module: Wine
 	Table: wine_maker. Module: WineMaker
 	Processing templates:
-	Path to run-time templates: /home/ron/httpd/prefork/htdocs/assets/templates/local/wine
+	Path to run-time templates: /var/www/assets/templates/local/wine
 	Creating htdocs/assets/templates/local/wine
 	Copying htdocs/assets/templates/local/wine/content.tmpl
 	Copying htdocs/assets/templates/local/wine/main.menu.tmpl
@@ -382,8 +382,8 @@ must restrict usage of the generated code to trusted persons.
 	shell> sudo perl Build install
 
 	Step 9: Install the FastCGId script:
-	shell> cp htdocs/search/wine.fcgi $HOME/httpd/prefork/htdocs/search/
-	shell> chmod a+x $HOME/httpd/prefork/cgi-bin/wine.cgi
+	shell> sudo cp -r htdocs/search /var/www
+	shell> sudo chmod a+x /var/www/search/wine.fcgi
 
 	Step 10: Patch httpd.conf (see httpd/httpd.conf.patch):
 	LoadModule fcgid_module modules/mod_fcgid.so
@@ -394,9 +394,9 @@ must restrict usage of the generated code to trusted persons.
 	    Deny from all
 	    Allow from 127.0.0.1
 	</Location>
-	
+
 	Step 11: Restart Apache:
-	shell> $HOME/httpd/prefork/bin/apachectl graceful
+	shell> sudo /etc/init.d/apache2 restart
 
 	Step 12: Use a web client to hit http://127.0.0.1/search/wine.fcgi
 	Start searching!
@@ -451,7 +451,7 @@ This takes a directory name, which is the name of your web server's document roo
 
 If not specified, the value defaults to the value in lib/Rose/DBx/Bouquet/.htcgi.bouquet.conf.
 
-The default value is /home/ron/httpd/prefork/htdocs, which suits me.
+The default value is /var/www, which suits me.
 
 =item exclude
 
@@ -479,7 +479,7 @@ These templates are input to the code generation process.
 
 If not specified, the value defaults to the value in lib/CGI/Application/Bouquet/Rose/.htcgi.bouquet.conf.
 
-The default value is ../CGI-Application-Bouquet-Rose-1.00/templates.
+The default value is ../CGI-Application-Bouquet-Rose/templates.
 
 Note: The point of the '../' is because I assume you have done 'cd Local-Wine-1.06'
 or the equivalent for whatever module you are working with.
@@ -632,51 +632,9 @@ Do everything.
 
 See C<bin/cgi.app.gen.pl> for an example of how to call C<run()>.
 
-=head1 Required Modules
-
-=over 4
-
-=item Carp
-
-=item File::Copy
-
-=item File::Path
-
-=item File::Spec
-
-=item HTML::Template
-
-=item Local::Wine
-
-=back
-
-=head1 Modules Required by the Generated Code
-
-=over 4
-
-=item CGI::Application
-
-=item CGI::Application::Dispatch
-
-=item Data::Page
-
-=item Local::Wine::Config
-
-=item Rose::DB
-
-=item Rose::DB::Object
-
-=item Rose::DB::Object::Manager
-
-=item Rose::HTML::Form
-
-=item Rose::HTMLx::Form
-
-=back
-
 =head1 Author
 
-C<CGI::Application::Bouquet::Rose> was written by Ron Savage in 2008. [ron@savage.net.au]
+C<CGI::Application::Bouquet::Rose> was written by Ron Savage I<E<lt>ron@savage.net.auE<gt>> in 2008.
 
 Home page: http://savage.net.au/index.html
 
